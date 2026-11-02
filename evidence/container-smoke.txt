@@ -1,0 +1,1 @@
+PASS: UID 1000, read-only container, authentication, independent review, real SCIM writes, native readback and tenant isolation

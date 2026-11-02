@@ -1,0 +1,10 @@
+[
+  {
+    "id": "worker-001",
+    "tenant": "sandbox",
+    "name": "Synthetic Engineer",
+    "email": "engineer@example.invalid",
+    "department": "engineering",
+    "employment": "active"
+  }
+]

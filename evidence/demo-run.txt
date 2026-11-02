@@ -1,0 +1,26 @@
+
+> workforceops@1.0.0 demo
+> node --import tsx scripts/demo.ts --write
+
+{
+  "scope": "real HTTP against the local SCIM subset, synthetic identities",
+  "unapprovedStatus": 409,
+  "selfReviewStatus": 403,
+  "partialStatus": "blocked",
+  "resumedStatus": "completed",
+  "verifiedProviders": [
+    {
+      "provider": "directory",
+      "status": "verified"
+    },
+    {
+      "provider": "collaboration",
+      "status": "verified"
+    }
+  ],
+  "offboardWritesPerProvider": 1,
+  "manualTasksRemain": 2,
+  "onboarding": "verified",
+  "roleChange": "verified",
+  "auditIntegrity": true
+}

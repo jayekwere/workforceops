@@ -1,0 +1,14 @@
+# Integration contract
+
+| Surface                           | Implementation                                                                                                                 | Validation                                                                  |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| Local directory and collaboration | Two SCIM namespaces, user listing/filtering, creation, ETag-conditional PATCH and readback over real HTTP                      | CLI, automated, browser and container workflows                             |
+| External SCIM                     | Fixed HTTPS URL, dedicated environment credential, strict identity/projection checks, bounded JSON, no redirect or write retry | Local protocol/transport and negative-path tests; no SaaS tenant acceptance |
+| Local catalog                     | Trusted seed records with workflow-maintained department/employment fields                                                     | Lifecycle and stale-record tests                                            |
+| Equipment/data decisions          | Explicit manual operator attestation                                                                                           | API and browser tests; no physical or external transfer verification        |
+
+External endpoints must support `GET /Users?filter=externalId eq "id"`, bounded list responses with at most 200 managed users, POST creation, PATCH replace for active/displayName/roles, and weak ETags represented as `W/"number"`. The supported schema is intentionally narrower than all SCIM deployments. A provider with different role, filter, version or response semantics fails contract validation and needs a reviewed adapter extension. Paginated or truncated inventories fail closed rather than reporting a complete reconciliation.
+
+Only external IDs from the trusted catalog are used. Remote user IDs are bounded safe path components. Existing userName must match the catalog email before a change. Provider configuration, not an API caller, supplies tenant scope and credentials. ETags protect a conditional update; the provider must actually enforce them. Session revocation, groups, licenses and content ownership are outside the implemented projection. A deactivated user may retain independently issued sessions. Check native provider semantics and least-privilege permissions in a dedicated test tenant before a live deployment.
+
+Reference: [SCIM protocol](https://www.rfc-editor.org/rfc/rfc7644.txt). This implementation claims the listed subset, not protocol certification or acceptance by any named SaaS service.

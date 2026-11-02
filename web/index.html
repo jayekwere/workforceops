@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+    <title>WorkforceOps | Operations workspace</title>
+  </head>
+  <body class="">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand"><span class="mark">◇</span>WorkforceOps</div>
+        <div>
+          <p class="overline">Operations workspace</p>
+          <nav class="nav">
+            <a href="#employees" class="active">◈ &nbsp; Workforce</a
+            ><a href="#request" class="">⌘ &nbsp; Lifecycle request</a
+            ><a href="#review" class="">▣ &nbsp; Review queue</a
+            ><a href="#activity" class="">▤ &nbsp; Evidence</a>
+          </nav>
+        </div>
+        <div class="side-note">
+          <span class="dot"></span> Scoped. Verified. Recorded.<br />Independent review by design<br /><br />v1.0.0
+          · Reference service
+        </div>
+      </aside>
+      <div class="workspace">
+        <header class="topbar">
+          <div class="crumb">Workspace / <b>WorkforceOps</b></div>
+          <div class="connection">
+            <label for="token">Access token</label
+            ><input
+              id="token"
+              type="password"
+              placeholder="Paste your access token"
+              autocomplete="off"
+              aria-label="Access token"
+            /><button id="connect">Connect</button
+            ><button id="disconnect" class="ghost">Disconnect</button
+            ><span id="status" class="status" role="status">Disconnected</span>
+          </div>
+        </header>
+        <main class="main">
+          <div class="heading">
+            <div>
+              <span class="overline">People change. Access should follow.</span>
+              <h1>Every lifecycle change, accounted for.</h1>
+              <p>Provision access, review changes, and verify each managed account.</p>
+            </div>
+            <button id="refresh" class="ghost">↻ Refresh</button>
+          </div>
+          <div id="notice" class="notice" role="status">
+            Connect to your workspace to load records and operational evidence.
+          </div>
+          <section class="stats" aria-label="Operational metrics">
+            <article class="stat">
+              <div class="stat-top">People<span class="stat-icon">◉</span></div>
+              <b class="value" id="people-count">0</b><small>Authoritative catalog</small>
+            </article>
+            <article class="stat">
+              <div class="stat-top">Managed services<span class="stat-icon">⌘</span></div>
+              <b class="value" id="provider-count">0</b><small>Configured account boundaries</small>
+            </article>
+            <article class="stat">
+              <div class="stat-top">Awaiting approval<span class="stat-icon">◷</span></div>
+              <b class="value" id="pending-count">0</b><small>Independent review</small>
+            </article>
+            <article class="stat">
+              <div class="stat-top">Verified access changes<span class="stat-icon">✓</span></div>
+              <b class="value" id="complete-count">0</b><small>Managed access steps</small>
+            </article>
+          </section>
+          <div class="grid">
+            <div>
+              <section class="panel" id="employee-panel">
+                <div class="panel-head">
+                  <h2>Managed workforce</h2>
+                  <span class="badge">Identity catalog</span>
+                </div>
+                <div class="provider-strip" id="providers"></div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Identity</th>
+                        <th>Department</th>
+                        <th>Employment</th>
+                        <th>Managed ID</th>
+                      </tr>
+                    </thead>
+                    <tbody id="employees"></tbody>
+                  </table>
+                </div>
+              </section>
+              <section class="panel" id="review">
+                <div class="panel-head">
+                  <h2>Reviewed operations</h2>
+                  <span class="badge">Exact plan binding</span>
+                </div>
+                <div id="plans" class="empty">Connect to load plans.</div>
+              </section>
+              <section class="panel" id="activity">
+                <div class="panel-head">
+                  <h2>Activity ledger</h2>
+                  <span class="badge">Tenant scoped</span>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Time</th>
+                        <th>Actor</th>
+                        <th>Evidence</th>
+                      </tr>
+                    </thead>
+                    <tbody id="audit"></tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+            <div>
+              <section class="panel" id="request">
+                <div class="panel-head">
+                  <h2>Lifecycle request</h2>
+                  <span class="badge">Approval required</span>
+                </div>
+                <div class="panel-body">
+                  <p>Preview and bind the exact account changes before independent review.</p>
+                  <div class="control-grid">
+                    <div>
+                      <label for="employee">Employee</label
+                      ><select id="employee"></select>
+                    </div>
+                    <div>
+                      <label for="operation">Operation</label
+                      ><select id="operation">
+                        <option value="offboard">Offboard</option>
+                        <option value="onboard">Onboard</option>
+                        <option value="change-role">Change role</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="department">Role template</label
+                      ><select id="department">
+                        <option value="engineering">Engineering</option>
+                        <option value="operations">Operations</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="toolbar">
+                    <button id="create-plan" class="primary">Create reviewable plan</button>
+                  </div>
+                  <p class="subtle">
+                    Use requester, reviewer, and operator tokens for the three independent steps.
+                  </p>
+                </div>
+              </section>
+              <section class="panel" id="reconcile">
+                <div class="panel-head">
+                  <h2>Account reconciliation</h2>
+                  <span class="badge">Read only</span>
+                </div>
+                <div class="panel-body">
+                  <p>Compare configured accounts with employment state and role templates.</p>
+                  <button id="drift">Check account drift</button>
+                  <div id="drift-results" class="output">No reconciliation has run.</div>
+                </div>
+              </section>
+              <section class="panel" id="fault">
+                <div class="panel-head">
+                  <h2>Failure exercise</h2>
+                  <span class="badge">Local lab</span>
+                </div>
+                <div class="panel-body">
+                  <p>
+                    The local SCIM service can pause collaboration to demonstrate partial
+                    offboarding and safe recovery.
+                  </p>
+                  <div class="toolbar">
+                    <button id="pause">Pause collaboration</button
+                    ><button id="restore">Restore collaboration</button>
+                  </div>
+                  <p id="fault-status" class="subtle">
+                    Demo mode only. External providers are never fault-injected.
+                  </p>
+                </div>
+              </section>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Evidence before assumptions · Explicit trust boundaries</span
+            ><span>Local assets · No telemetry</span>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

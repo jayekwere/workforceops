@@ -1,0 +1,8 @@
+[
+  {
+    "alias": "directory",
+    "tenant": "sandbox",
+    "endpoint": "https://scim.example.invalid/v2",
+    "tokenEnv": "SCIM_DIRECTORY_TOKEN"
+  }
+]
