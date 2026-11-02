@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { secureApp, planRoutes, idParam, ExecuteSchema } from './http.js';
-import { Auth, requireRole } from './security.js';
+import { Auth, requireRole, Fault } from './security.js';
 import { Store } from './store.js';
 import { Workforce } from './workforce.js';
 import type { ScimClient, LabFault } from './scim.js';
@@ -55,6 +55,16 @@ export function createApp(o: {
         })
         .strict()
         .parse(req.body);
+      const provider = o.providers.find(
+        (p) =>
+          p.config.alias === b.provider &&
+          p.config.tenant === req.identity.tenant &&
+          p.config.mode === 'local-scim',
+      );
+      if (!provider || !Object.hasOwn(o.faults!, b.provider))
+        throw new Fault(403, 'demo_provider_not_authorized');
+      // Commit the audit before changing process-local lab state. A full audit fails closed.
+      o.store.tx(() => o.store.audit(req.identity, 'demo.fault-changed', 'completed', b));
       o.faults![b.provider] = {
         unavailable: b.unavailable,
         loseAcknowledgement: b.loseAcknowledgement,

@@ -129,6 +129,7 @@ test('audit edits and middle deletion fail verification; persistence and wrong-k
     store.audit(reviewer, 'two', 'approved');
     store.audit(operator, 'three', 'completed');
     assert.equal(store.verify(), true);
+    store.db.exec('DROP INDEX audit_tenant; DROP INDEX audit_actor_action');
     store.close();
     store = new Store(file, key);
     assert.equal(store.verify(), true);
@@ -325,6 +326,7 @@ test('completed operation replay remains read-only after reopening durable state
     book.review(reviewer, p.id, p.digest, true);
     const claim = book.claim(operator, p.id, p.digest, 'durable-operation');
     book.save(operator, claim.plan, 'completed', { verified: true });
+    store.db.exec('DROP INDEX audit_tenant; DROP INDEX audit_actor_action');
     store.close();
     store = new Store(file, key);
     book = new Approvals(store, 'policy');
@@ -360,5 +362,40 @@ test('a failed transaction start leaves the next request in a fresh immediate tr
   } finally {
     store.db.exec = original;
     store.close();
+  }
+});
+
+test('tenant audit quotas preserve other tenants and rejected transactions across restart', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'audit-quota-'));
+  const file = join(dir, 'state.sqlite');
+  const key = 'k'.repeat(32);
+  let store = new Store(file, key);
+  try {
+    for (let i = 0; i < 10000; i++) store.audit(operator, 'quota.fixture', 'completed');
+    assert.equal(store.auditCount('sandbox'), 10000);
+    assert.equal(store.audits('sandbox').length, 200);
+    store.db.exec('DROP INDEX audit_tenant; DROP INDEX audit_actor_action');
+    store.close();
+    store = new Store(file, key);
+    assert.throws(
+      () =>
+        store.tx(() => {
+          store.put('sandbox', 'test', 'should-rollback', { value: true });
+          store.audit(operator, 'quota.denied', 'completed');
+        }),
+      { code: 'tenant_audit_capacity_reached' },
+    );
+    assert.equal(store.get('sandbox', 'test', 'should-rollback'), undefined);
+    const foreign = { ...operator, tenant: 'isolated' };
+    store.tx(() => {
+      store.put('isolated', 'test', 'available', { value: true });
+      store.audit(foreign, 'quota.allowed', 'completed');
+    });
+    assert.equal(store.auditCount('isolated'), 1);
+    assert.deepEqual(store.get('isolated', 'test', 'available'), { value: true });
+    assert.equal(store.verify(), true);
+  } finally {
+    store.close();
+    rmSync(dir, { recursive: true, force: true });
   }
 });

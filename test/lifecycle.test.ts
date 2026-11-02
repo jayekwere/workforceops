@@ -336,6 +336,39 @@ test('HTTP contract guards roles, tenant isolation, extra fields, fault controls
     await s.close();
   }
 });
+test('demo faults require the provider tenant and record only accepted changes', async () => {
+  const s = await setup();
+  const change = (
+    role: string,
+    provider: string,
+    unavailable: boolean,
+    loseAcknowledgement = false,
+  ) =>
+    s.app.inject({
+      method: 'POST',
+      url: '/api/demo/fault',
+      headers: {
+        host: '127.0.0.1:4410',
+        authorization: 'Bearer ' + s.tokens[role],
+      },
+      payload: { provider, unavailable, loseAcknowledgement },
+    });
+  try {
+    for (const provider of ['directory', 'collaboration']) {
+      assert.equal((await change('outsider', provider, true, true)).statusCode, 403);
+      assert.deepEqual(s.lab.faults[provider], { unavailable: false, loseAcknowledgement: false });
+    }
+    assert.equal((await change('operator', 'directory', true)).statusCode, 200);
+    assert.equal(s.lab.faults.directory!.unavailable, true);
+    assert.ok(s.store.audits('sandbox').some((e) => e.action === 'demo.fault-changed'));
+    assert.equal(s.store.audits('isolated').length, 0);
+    assert.equal((await change('operator', 'directory', false)).statusCode, 200);
+    assert.ok(await s.providers[0]!.find('worker-001'));
+  } finally {
+    await s.close();
+  }
+});
+
 test('SCIM conditional updates reject stale ETags and malformed or incomplete provider responses', async () => {
   const s = await setup();
   try {

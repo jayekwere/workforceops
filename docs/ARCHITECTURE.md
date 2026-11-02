@@ -1,6 +1,6 @@
 # Lifecycle architecture and recovery
 
-The employee catalog is local, tenant scoped and seeded from trusted configuration. Identities, emails and provider endpoints are not selected by arbitrary request payloads. The request schema permits only catalog employee ID, one of three lifecycle actions and a known role template. Employees belong to one server tenant. Provider aliases and normalized endpoint authorities must be unique. Each SCIM client carries a separate server credential and a fingerprint of its configured scope and endpoint; caller access tokens never become upstream credentials.
+The employee catalog is local, tenant scoped and seeded from trusted configuration. Identities, emails and provider endpoints are not selected by arbitrary request payloads. The request schema permits only catalog employee ID, one of three lifecycle actions and a known role template. Employees belong to one server tenant. Provider aliases and normalized complete endpoint URLs must be unique. Each SCIM client carries a separate server credential and a fingerprint of its configured scope and endpoint; caller access tokens never become upstream credentials.
 
 A plan binds the local employee snapshot, desired account projection, provider identities, raw before-state including ETag, policy hash, requester, tenant and expiry. Review must come from another subject. Execution requires an operator distinct from both. A durable employee lock prevents competing workflows from changing the same employee while a partial or uncertain operation exists.
 

@@ -98,3 +98,5 @@ Read [API contracts](docs/API.md), [operations](docs/OPERATIONS.md), [threat mod
 Single process and local SQLite. At most 100 retained plans and 1,000 execution-key records per tenant. A hard audit bound requires controlled archive/rotation. Credential verification uses a local public JWKS snapshot; external issuance, TLS and key rotation are operator responsibilities. External SCIM behavior, scope restrictions, role semantics and eventual consistency need dedicated live acceptance. Upstream administrators can race state changes. ETags and readback narrow races but do not establish a distributed transaction or exactly-once external effects. Outstanding uncertain operations remain locked until readback proves the reviewed state; no force-unlock or destructive retry endpoint is supplied.
 
 [Security reporting](SECURITY.md) · [Contributing](CONTRIBUTING.md) · [MIT license](LICENSE)
+
+Security review and remediation details are in [the review record](docs/SECURITY-REVIEW.md). Audit history is bounded at 10,000 entries per tenant and 100,000 globally; see the operations guide before any long-running deployment.

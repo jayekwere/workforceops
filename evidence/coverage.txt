@@ -1,66 +1,68 @@
 
-> workforceops@1.0.0 coverage
+> workforceops@1.0.1 coverage
 > node --experimental-test-coverage --import tsx --test --test-concurrency=1 test/*.test.ts
 
-✔ real HTTP SCIM onboarding, role movement and offboarding verify both managed services (325.686792ms)
-✔ partial offboarding resumes only the known blocked step after service recovery (38.441625ms)
-✔ lost acknowledgement stays uncertain and reconciliation reads without another write (30.548208ms)
-✔ unresolved operations lock an employee against competing approved plans (92.148834ms)
-✔ stale account versions, employee changes and expiry reject without writing (128.19125ms)
-✔ concurrent retries reserve a single workflow and issue one write per service (91.763916ms)
-✔ independent identities and cross-tenant workflow access are enforced (8.822791ms)
-✔ reconciliation finds departed active accounts, entitlement drift and orphans (33.127125ms)
-✔ HTTP contract guards roles, tenant isolation, extra fields, fault controls and evidence (31.76575ms)
-✔ SCIM conditional updates reject stale ETags and malformed or incomplete provider responses (11.466916ms)
-✔ manual decisions are explicit attestations and cannot close before access verification (16.106333ms)
-✔ a reconciled lease prevents a stale worker from overwriting recovered state (8.392625ms)
-✔ a crashed claim before any dispatch can be recovered without a write (17.146792ms)
-✔ signed access tokens map application permissions from the server registry (43.338ms)
-✔ access-token constraint: issuer (6.281875ms)
-✔ access-token constraint: audience (2.415666ms)
-✔ access-token constraint: expired (1.512667ms)
-✔ access-token constraint: future (0.638666ms)
-✔ access-token constraint: lifetime (0.927917ms)
-✔ access-token constraint: subject (2.315542ms)
-✔ access-token constraint: type (0.87975ms)
-✔ access-token constraint: jti (1.001167ms)
-✔ access-token constraint: forged-privileges (0.5955ms)
-✔ missing, malformed, foreign, symmetric and oversized bearer tokens fail closed (2.420042ms)
-✔ RS256 public verification works and private JWKS or duplicate registry subjects reject (72.984834ms)
-✔ canonical request fingerprints preserve order of arrays and ignore object key order (2.071334ms)
-✔ rate buckets expire, enforce capacity and reject excess requests (0.226666ms)
-✔ audit edits and middle deletion fail verification; persistence and wrong-key checks work (42.648667ms)
-✔ nested transactions roll back only the failed nested savepoint (2.390417ms)
-✔ independent review and execution reject self-approval even with combined roles (5.565ms)
-✔ approval expiry, changed policy, wrong digest and rejection prevent dispatch (1.49675ms)
-✔ idempotency binds actor and exact operation and never claims a completed plan twice (2.228875ms)
-✔ HTTP boundary rejects untrusted origins, hosts, tokens, oversized bodies and excess traffic (250.87225ms)
-✔ fixed endpoint transport refuses unsafe URL shapes, redirects, oversized and malformed responses (21.625458ms)
-✔ completed operation replay remains read-only after reopening durable state (43.078792ms)
-✔ a failed transaction start leaves the next request in a fresh immediate transaction (0.937541ms)
-ℹ tests 36
+✔ real HTTP SCIM onboarding, role movement and offboarding verify both managed services (222.54375ms)
+✔ partial offboarding resumes only the known blocked step after service recovery (24.336792ms)
+✔ lost acknowledgement stays uncertain and reconciliation reads without another write (20.137708ms)
+✔ unresolved operations lock an employee against competing approved plans (13.794ms)
+✔ stale account versions, employee changes and expiry reject without writing (83.206542ms)
+✔ concurrent retries reserve a single workflow and issue one write per service (32.539833ms)
+✔ independent identities and cross-tenant workflow access are enforced (11.264542ms)
+✔ reconciliation finds departed active accounts, entitlement drift and orphans (11.503209ms)
+✔ HTTP contract guards roles, tenant isolation, extra fields, fault controls and evidence (35.953083ms)
+✔ demo faults require the provider tenant and record only accepted changes (9.180708ms)
+✔ SCIM conditional updates reject stale ETags and malformed or incomplete provider responses (10.525334ms)
+✔ manual decisions are explicit attestations and cannot close before access verification (13.101625ms)
+✔ a reconciled lease prevents a stale worker from overwriting recovered state (7.663834ms)
+✔ a crashed claim before any dispatch can be recovered without a write (16.710042ms)
+✔ signed access tokens map application permissions from the server registry (13.1045ms)
+✔ access-token constraint: issuer (1.759458ms)
+✔ access-token constraint: audience (0.789084ms)
+✔ access-token constraint: expired (1.020708ms)
+✔ access-token constraint: future (0.721959ms)
+✔ access-token constraint: lifetime (0.556708ms)
+✔ access-token constraint: subject (0.581458ms)
+✔ access-token constraint: type (0.695ms)
+✔ access-token constraint: jti (0.722459ms)
+✔ access-token constraint: forged-privileges (0.487958ms)
+✔ missing, malformed, foreign, symmetric and oversized bearer tokens fail closed (1.663084ms)
+✔ RS256 public verification works and private JWKS or duplicate registry subjects reject (22.879375ms)
+✔ canonical request fingerprints preserve order of arrays and ignore object key order (0.3135ms)
+✔ rate buckets expire, enforce capacity and reject excess requests (0.1755ms)
+✔ audit edits and middle deletion fail verification; persistence and wrong-key checks work (7.264541ms)
+✔ nested transactions roll back only the failed nested savepoint (0.698875ms)
+✔ independent review and execution reject self-approval even with combined roles (1.019667ms)
+✔ approval expiry, changed policy, wrong digest and rejection prevent dispatch (1.150584ms)
+✔ idempotency binds actor and exact operation and never claims a completed plan twice (1.030708ms)
+✔ HTTP boundary rejects untrusted origins, hosts, tokens, oversized bodies and excess traffic (115.471167ms)
+✔ fixed endpoint transport refuses unsafe URL shapes, redirects, oversized and malformed responses (19.975917ms)
+✔ completed operation replay remains read-only after reopening durable state (5.957708ms)
+✔ a failed transaction start leaves the next request in a fresh immediate transaction (0.439333ms)
+✔ tenant audit quotas preserve other tenants and rejected transactions across restart (3229.311583ms)
+ℹ tests 38
 ℹ suites 0
-ℹ pass 36
+ℹ pass 38
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 2392.26625
+ℹ duration_ms 5123.606166
 ℹ start of coverage report
 ℹ ---------------------------------------------------------------------------------------------------
 ℹ file          | line % | branch % | funcs % | uncovered lines
 ℹ ---------------------------------------------------------------------------------------------------
 ℹ src           |        |          |         |
-ℹ  app.ts       |  96.92 |   100.00 |   53.85 | 19 21
+ℹ  app.ts       |  96.00 |   100.00 |   60.00 | 14 19 21
 ℹ  approvals.ts |  97.90 |    89.66 |  100.00 | 16 35 73
 ℹ  catalog.ts   | 100.00 |   100.00 |  100.00 |
 ℹ  http.ts      |  90.20 |    92.31 |   53.85 | 55-58 61 67 74 77-79
 ℹ  net.ts       |  97.14 |    89.47 |  100.00 | 37 42
 ℹ  scim.ts      |  95.42 |    86.44 |   92.00 | 75 78 110-112 115-122
 ℹ  security.ts  | 100.00 |    96.67 |  100.00 |
-ℹ  store.ts     |  95.95 |    93.75 |   85.00 | 14-16 67 93-94
+ℹ  store.ts     |  94.64 |    92.59 |   90.48 | 14-16 69 104-106 108-109
 ℹ  workforce.ts |  95.64 |    81.34 |  100.00 | 31-32 50 126-129 133 159 178-179 190 208-209 267-269
 ℹ ---------------------------------------------------------------------------------------------------
-ℹ all files     |  96.19 |    88.51 |   89.03 |
+ℹ all files     |  95.99 |    88.59 |   89.87 |
 ℹ ---------------------------------------------------------------------------------------------------
 ℹ end of coverage report

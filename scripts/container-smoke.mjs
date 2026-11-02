@@ -54,6 +54,11 @@ try {
   };
   assert.equal((await fetch(base + '/api/overview')).status, 401);
   assert.equal((await call('/api/overview', 'outsider')).status, 200);
+  assert.equal(
+    (await call('/api/demo/fault', 'outsider', { provider: 'directory', unavailable: true }))
+      .status,
+    403,
+  );
   const p = (
     await call('/api/plans', 'requester', { employeeId: 'worker-003', action: 'offboard' })
   ).body;

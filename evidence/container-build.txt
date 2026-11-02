@@ -5,119 +5,135 @@
 #1 DONE 0.0s
 
 #2 [internal] load metadata for docker.io/library/node:24-alpine@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85
-#2 DONE 0.0s
+#2 DONE 0.8s
 
 #3 [internal] load .dockerignore
 #3 transferring context: 135B done
 #3 DONE 0.0s
 
-#4 [build 1/7] FROM docker.io/library/node:24-alpine@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85
+#4 [build 1/8] FROM docker.io/library/node:24-alpine@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85
 #4 resolve docker.io/library/node:24-alpine@sha256:8a32c8cf649a49915a66e81e7a609223c708d0adabf288ee3f4077d765542f85 0.0s done
 #4 DONE 0.0s
 
 #5 [internal] load build context
-#5 transferring context: 10.44kB done
+#5 transferring context: 119.73kB 0.0s done
 #5 DONE 0.0s
 
-#6 [build 3/7] COPY package.json package-lock.json ./
+#6 [build 2/8] WORKDIR /app
 #6 CACHED
 
-#7 [build 2/7] WORKDIR /app
-#7 CACHED
+#7 [build 3/7] COPY package.json package-lock.json ./
+#7 DONE 0.0s
 
 #8 [build 4/7] RUN npm ci --ignore-scripts
-#8 CACHED
+#8 2.950
+#8 2.950 added 61 packages, and audited 62 packages in 3s
+#8 2.950
+#8 2.950 22 packages are looking for funding
+#8 2.950   run `npm fund` for details
+#8 2.951
+#8 2.951 found 0 vulnerabilities
+#8 2.952 npm notice
+#8 2.952 npm notice New major version of npm available! 11.19.1 -> 12.2.1
+#8 2.952 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+#8 2.952 npm notice To update run: npm install -g npm@12.2.1
+#8 2.952 npm notice
+#8 DONE 3.3s
 
 #9 [build 5/7] COPY . .
-#9 DONE 0.0s
+#9 DONE 0.1s
 
 #10 [build 6/7] RUN npm run typecheck && npm test && npm run build
-#10 0.205
-#10 0.205 > workforceops@1.0.0 typecheck
-#10 0.205 > tsc --noEmit && tsc -p tsconfig.web.json
-#10 0.205
-#10 0.856
-#10 0.856 > workforceops@1.0.0 test
-#10 0.856 > node --import tsx --test --test-concurrency=1 test/*.test.ts
-#10 0.856
-#10 1.773 ✔ real HTTP SCIM onboarding, role movement and offboarding verify both managed services (238.086208ms)
-#10 1.807 ✔ partial offboarding resumes only the known blocked step after service recovery (35.188ms)
-#10 1.832 ✔ lost acknowledgement stays uncertain and reconciliation reads without another write (24.852417ms)
-#10 1.861 ✔ unresolved operations lock an employee against competing approved plans (28.878916ms)
-#10 1.905 ✔ stale account versions, employee changes and expiry reject without writing (42.951125ms)
-#10 1.934 ✔ concurrent retries reserve a single workflow and issue one write per service (30.249792ms)
-#10 1.947 ✔ independent identities and cross-tenant workflow access are enforced (12.641ms)
-#10 1.960 ✔ reconciliation finds departed active accounts, entitlement drift and orphans (12.791791ms)
-#10 2.002 ✔ HTTP contract guards roles, tenant isolation, extra fields, fault controls and evidence (42.84175ms)
-#10 2.017 ✔ SCIM conditional updates reject stale ETags and malformed or incomplete provider responses (14.47ms)
-#10 2.048 ✔ manual decisions are explicit attestations and cannot close before access verification (26.944917ms)
-#10 2.064 ✔ a reconciled lease prevents a stale worker from overwriting recovered state (19.5325ms)
-#10 2.102 ✔ a crashed claim before any dispatch can be recovered without a write (39.823958ms)
-#10 2.566 ✔ signed access tokens map application permissions from the server registry (15.441833ms)
-#10 2.568 ✔ access-token constraint: issuer (2.026ms)
-#10 2.569 ✔ access-token constraint: audience (0.976667ms)
-#10 2.571 ✔ access-token constraint: expired (1.504709ms)
-#10 2.572 ✔ access-token constraint: future (1.146625ms)
-#10 2.573 ✔ access-token constraint: lifetime (0.86425ms)
-#10 2.574 ✔ access-token constraint: subject (1.086375ms)
-#10 2.575 ✔ access-token constraint: type (0.963708ms)
-#10 2.577 ✔ access-token constraint: jti (1.108458ms)
-#10 2.578 ✔ access-token constraint: forged-privileges (1.373208ms)
-#10 2.581 ✔ missing, malformed, foreign, symmetric and oversized bearer tokens fail closed (2.6855ms)
-#10 2.728 ✔ RS256 public verification works and private JWKS or duplicate registry subjects reject (34.018292ms)
-#10 2.728 ✔ canonical request fingerprints preserve order of arrays and ignore object key order (0.612ms)
-#10 2.729 ✔ rate buckets expire, enforce capacity and reject excess requests (0.338458ms)
-#10 2.730 ✔ audit edits and middle deletion fail verification; persistence and wrong-key checks work (19.332292ms)
-#10 2.735 ✔ nested transactions roll back only the failed nested savepoint (1.151625ms)
-#10 2.736 ✔ independent review and execution reject self-approval even with combined roles (1.501542ms)
-#10 2.737 ✔ approval expiry, changed policy, wrong digest and rejection prevent dispatch (2.010041ms)
-#10 2.737 ✔ idempotency binds actor and exact operation and never claims a completed plan twice (1.762416ms)
-#10 2.778 ✔ HTTP boundary rejects untrusted origins, hosts, tokens, oversized bodies and excess traffic (99.62125ms)
-#10 2.779 ✔ fixed endpoint transport refuses unsafe URL shapes, redirects, oversized and malformed responses (20.994834ms)
-#10 2.780 ✔ completed operation replay remains read-only after reopening durable state (15.869958ms)
-#10 2.780 ✔ a failed transaction start leaves the next request in a fresh immediate transaction (0.50275ms)
-#10 2.792 ℹ tests 36
-#10 2.792 ℹ suites 0
-#10 2.792 ℹ pass 36
-#10 2.792 ℹ fail 0
-#10 2.792 ℹ cancelled 0
-#10 2.792 ℹ skipped 0
-#10 2.792 ℹ todo 0
-#10 2.792 ℹ duration_ms 1908.930251
-#10 3.003
-#10 3.003 > workforceops@1.0.0 build
-#10 3.003 > tsc && node scripts/build-web.mjs
-#10 3.003
-#10 DONE 3.6s
+#10 0.276
+#10 0.276 > workforceops@1.0.1 typecheck
+#10 0.276 > tsc --noEmit && tsc -p tsconfig.web.json
+#10 0.276
+#10 1.151
+#10 1.151 > workforceops@1.0.1 test
+#10 1.151 > node --import tsx --test --test-concurrency=1 test/*.test.ts
+#10 1.151
+#10 1.731 ✔ real HTTP SCIM onboarding, role movement and offboarding verify both managed services (178.7405ms)
+#10 1.761 ✔ partial offboarding resumes only the known blocked step after service recovery (30.955292ms)
+#10 1.784 ✔ lost acknowledgement stays uncertain and reconciliation reads without another write (22.818792ms)
+#10 1.802 ✔ unresolved operations lock an employee against competing approved plans (17.769625ms)
+#10 1.836 ✔ stale account versions, employee changes and expiry reject without writing (33.608666ms)
+#10 1.868 ✔ concurrent retries reserve a single workflow and issue one write per service (33.059208ms)
+#10 1.878 ✔ independent identities and cross-tenant workflow access are enforced (10.037542ms)
+#10 1.886 ✔ reconciliation finds departed active accounts, entitlement drift and orphans (8.345167ms)
+#10 1.916 ✔ HTTP contract guards roles, tenant isolation, extra fields, fault controls and evidence (29.995167ms)
+#10 1.929 ✔ demo faults require the provider tenant and record only accepted changes (12.940875ms)
+#10 1.942 ✔ SCIM conditional updates reject stale ETags and malformed or incomplete provider responses (11.635959ms)
+#10 1.963 ✔ manual decisions are explicit attestations and cannot close before access verification (21.928167ms)
+#10 1.978 ✔ a reconciled lease prevents a stale worker from overwriting recovered state (14.486ms)
+#10 1.995 ✔ a crashed claim before any dispatch can be recovered without a write (18.5715ms)
+#10 2.356 ✔ signed access tokens map application permissions from the server registry (15.362542ms)
+#10 2.358 ✔ access-token constraint: issuer (2.167ms)
+#10 2.359 ✔ access-token constraint: audience (0.7565ms)
+#10 2.360 ✔ access-token constraint: expired (1.042125ms)
+#10 2.361 ✔ access-token constraint: future (1.016958ms)
+#10 2.362 ✔ access-token constraint: lifetime (0.797583ms)
+#10 2.363 ✔ access-token constraint: subject (1.170125ms)
+#10 2.364 ✔ access-token constraint: type (0.917459ms)
+#10 2.366 ✔ access-token constraint: jti (1.058166ms)
+#10 2.367 ✔ access-token constraint: forged-privileges (1.525666ms)
+#10 2.369 ✔ missing, malformed, foreign, symmetric and oversized bearer tokens fail closed (2.087917ms)
+#10 2.509 ✔ RS256 public verification works and private JWKS or duplicate registry subjects reject (50.270958ms)
+#10 2.510 ✔ canonical request fingerprints preserve order of arrays and ignore object key order (0.369458ms)
+#10 2.510 ✔ rate buckets expire, enforce capacity and reject excess requests (0.179791ms)
+#10 2.511 ✔ audit edits and middle deletion fail verification; persistence and wrong-key checks work (19.20675ms)
+#10 2.516 ✔ nested transactions roll back only the failed nested savepoint (0.811375ms)
+#10 2.517 ✔ independent review and execution reject self-approval even with combined roles (1.182875ms)
+#10 2.517 ✔ approval expiry, changed policy, wrong digest and rejection prevent dispatch (1.461167ms)
+#10 2.517 ✔ idempotency binds actor and exact operation and never claims a completed plan twice (1.559ms)
+#10 15.15 ✔ HTTP boundary rejects untrusted origins, hosts, tokens, oversized bodies and excess traffic (77.040083ms)
+#10 15.15 ✔ fixed endpoint transport refuses unsafe URL shapes, redirects, oversized and malformed responses (12.878917ms)
+#10 15.15 ✔ completed operation replay remains read-only after reopening durable state (18.182708ms)
+#10 15.15 ✔ a failed transaction start leaves the next request in a fresh immediate transaction (0.487917ms)
+#10 15.15 ✔ tenant audit quotas preserve other tenants and rejected transactions across restart (12599.517964ms)
+#10 15.17 ℹ tests 38
+#10 15.17 ℹ suites 0
+#10 15.17 ℹ pass 38
+#10 15.17 ℹ fail 0
+#10 15.17 ℹ cancelled 0
+#10 15.17 ℹ skipped 0
+#10 15.17 ℹ todo 0
+#10 15.17 ℹ duration_ms 13986.333756
+#10 15.26
+#10 15.26 > workforceops@1.0.1 build
+#10 15.26 > tsc && node scripts/build-web.mjs
+#10 15.26
+#10 DONE 15.5s
 
 #11 [build 7/7] RUN npm prune --omit=dev --ignore-scripts
-#11 2.687
-#11 2.687 removed 11 packages, and audited 51 packages in 2s
-#11 2.687
-#11 2.687 21 packages are looking for funding
-#11 2.687   run `npm fund` for details
-#11 2.688
-#11 2.688 found 0 vulnerabilities
-#11 DONE 2.7s
+#11 2.145
+#11 2.145 removed 11 packages, and audited 51 packages in 2s
+#11 2.145
+#11 2.145 21 packages are looking for funding
+#11 2.146   run `npm fund` for details
+#11 2.146
+#11 2.146 found 0 vulnerabilities
+#11 DONE 2.2s
 
 #12 [runtime 3/6] COPY --from=build /app/node_modules ./node_modules
-#12 CACHED
+#12 DONE 0.2s
 
 #13 [runtime 4/6] COPY --from=build /app/package.json /app/package-lock.json ./
-#13 CACHED
+#13 DONE 0.0s
 
 #14 [runtime 5/6] COPY --from=build /app/dist/src ./dist/src
-#14 CACHED
+#14 DONE 0.0s
 
 #15 [runtime 6/6] COPY --from=build /app/dist/web ./dist/web
 #15 DONE 0.0s
 
 #16 exporting to image
-#16 exporting layers 0.1s done
-#16 exporting manifest sha256:19ba7ac6bae106700f2504e03379ab2937b0b731aae320dab7bcbd4720257bad 0.0s done
-#16 exporting config sha256:01f82cdf1fd39dd83e5d7a7f98ee3a151db8cc5f0a2414a32dfc32067ec545bd done
-#16 exporting attestation manifest sha256:0b3c89e13aa621cce93e14800d25e9bf0f515b35fc4f9f5154eda7adae42d08f 0.0s done
-#16 exporting manifest list sha256:bbe068eb710cf1292373b769a8428ff409db79327c9cb93003ef233b25559a34 0.0s done
+#16 exporting layers
+#16 exporting layers 0.5s done
+#16 exporting manifest sha256:9e8ea4fb29911e655d5d6ab60d56c5e282786015226d8f7f085c5b3f1af4838f done
+#16 exporting config sha256:f25df6871d8e78f521deebe4143d578a925f8f9c024fa1135a1e93d999d21cb5 0.0s done
+#16 exporting attestation manifest sha256:6795d0078d78506271793216db9cbee67fb013f37defea486f244ebd45605d41 0.0s done
+#16 exporting manifest list sha256:1374fe00b0ee305ddcdf4a8ac704a3b704b55bd1eed3f018fdbc6fe64e352b62 0.0s done
 #16 naming to docker.io/library/workforceops:local done
-#16 unpacking to docker.io/library/workforceops:local 0.0s done
-#16 DONE 0.2s
+#16 unpacking to docker.io/library/workforceops:local
+#16 unpacking to docker.io/library/workforceops:local 0.4s done
+#16 DONE 0.9s

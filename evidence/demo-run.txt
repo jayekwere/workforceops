@@ -1,5 +1,5 @@
 
-> workforceops@1.0.0 demo
+> workforceops@1.0.1 demo
 > node --import tsx scripts/demo.ts --write
 
 {

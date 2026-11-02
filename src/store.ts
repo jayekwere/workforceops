@@ -26,7 +26,7 @@ export class Store {
     this.db = new DatabaseSync(file);
     if (file !== ':memory:') chmodSync(file, 0o600);
     this.db.exec(
-      `PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000; CREATE TABLE IF NOT EXISTS records(tenant TEXT NOT NULL,kind TEXT NOT NULL,id TEXT NOT NULL,body TEXT NOT NULL,PRIMARY KEY(tenant,kind,id)); CREATE TABLE IF NOT EXISTS audit(seq INTEGER PRIMARY KEY,body TEXT NOT NULL,hash TEXT NOT NULL);`,
+      `PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000; CREATE TABLE IF NOT EXISTS records(tenant TEXT NOT NULL,kind TEXT NOT NULL,id TEXT NOT NULL,body TEXT NOT NULL,PRIMARY KEY(tenant,kind,id)); CREATE TABLE IF NOT EXISTS audit(seq INTEGER PRIMARY KEY,body TEXT NOT NULL,hash TEXT NOT NULL); CREATE INDEX IF NOT EXISTS audit_tenant ON audit(json_extract(body,'$.tenant')); CREATE INDEX IF NOT EXISTS audit_actor_action ON audit(json_extract(body,'$.tenant'),json_extract(body,'$.action'),json_extract(body,'$.actor'));`,
     );
     if (!this.verify()) {
       this.db.close();
@@ -86,6 +86,24 @@ export class Store {
         .get(tenant, kind) as { n: number }
     ).n;
   }
+  auditCount(tenant: string, action?: string, actor?: string, source?: string): number {
+    const clauses = ["json_extract(body,'$.tenant')= ?"];
+    const values: string[] = [tenant];
+    for (const [field, value] of [
+      ['action', action],
+      ['actor', actor],
+      ['detail.source', source],
+    ] as const)
+      if (value !== undefined) {
+        clauses.push(`json_extract(body,'$.${field}')= ?`);
+        values.push(value);
+      }
+    return (
+      this.db
+        .prepare('SELECT count(*) AS n FROM audit WHERE ' + clauses.join(' AND '))
+        .get(...values) as { n: number }
+    ).n;
+  }
   audit(
     actor: Identity,
     action: string,
@@ -95,6 +113,8 @@ export class Store {
     const row = this.db.prepare('SELECT seq,hash FROM audit ORDER BY seq DESC LIMIT 1').get() as
       { seq: number; hash: string } | undefined;
     if ((row?.seq ?? 0) >= 100000) throw new Fault(507, 'audit_capacity_reached');
+    if (this.auditCount(actor.tenant) >= 10000)
+      throw new Fault(507, 'tenant_audit_capacity_reached');
     const body = {
       seq: (row?.seq ?? 0) + 1,
       at: new Date(this.now()).toISOString(),
